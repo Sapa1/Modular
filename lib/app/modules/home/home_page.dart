@@ -1,4 +1,8 @@
+import 'package:aprendendo_modular/app/bloc/temp_event_bloc.dart';
+import 'package:aprendendo_modular/app/bloc/temp_home_bloc.dart';
+import 'package:aprendendo_modular/app/bloc/temp_state_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatefulWidget {
@@ -10,19 +14,53 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   @override
+  void initState() {
+    super.initState();
+    TempFetchApiEvent tempFetchApiEvent = TempFetchApiEvent();
+    Modular.get<TempHomeBloc>().add(tempFetchApiEvent);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Primeira página'),
       ),
-      body: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Text('Item $index'),
-            ],
-          );
+      body: BlocBuilder<TempHomeBloc, TempState>(
+        bloc: Modular.get<TempHomeBloc>(),
+        builder: (context, state) {
+          if (state is TempStateSuccess) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Text("${state.temperatura.}"),
+                  Text('${state.temperatura.city}'),
+                  Text('${state.temperatura.temp}ºC'),
+                  Text("${state.temperatura.date}"),
+                ],
+              ),
+            );
+          }
+          if (state is TempStateFailure) {
+            return Center(
+              child: Text(state.message),
+            );
+          }
+          if (state is TempStateEmpty) {
+            return const Center(
+              child: Text('Não há dados'),
+            );
+          }
+          if (state is TempStateLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          } else {
+            return const Center(
+              child: Text('Deu ruim'),
+            );
+          }
         },
       ),
       bottomNavigationBar: Container(
