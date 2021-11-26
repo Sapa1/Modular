@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:aprendendo_modular/app/api/temp_model.dart';
+import 'package:aprendendo_modular/app/modules/home_module/repository/temp_model.dart';
 import 'package:dio/dio.dart';
 
 class DatasourceApi {

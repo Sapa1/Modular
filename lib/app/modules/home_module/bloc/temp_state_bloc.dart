@@ -1,7 +1,12 @@
-import 'package:aprendendo_modular/app/api/temp_model.dart';
+import 'package:aprendendo_modular/app/modules/home_module/repository/temp_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class TempState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
+
+class InitTempState extends TempState {
   @override
   List<Object?> get props => [];
 }

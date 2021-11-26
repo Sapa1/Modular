@@ -6,7 +6,3 @@ abstract class TempEvent extends Equatable {
 }
 
 class TempFetchApiEvent extends TempEvent {}
-
-class TempFetchApiWithErrorEvent extends TempEvent {}
-
-class TempFetchApiWithEmptyApiEvent extends TempEvent {}

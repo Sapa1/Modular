@@ -1,13 +1,13 @@
 import 'dart:convert';
 
 class TempModel {
-  final DateTime? date;
-  final double? temp;
-  final String? city;
+  final DateTime date;
+  final double temp;
+  final String city;
   TempModel({
-    this.date,
-    this.temp,
-    this.city,
+    required this.date,
+    required this.temp,
+    required this.city,
   });
 
   TempModel copyWith({
@@ -24,7 +24,7 @@ class TempModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'date': date!.toIso8601String(),
+      'date': date.toIso8601String(),
       'temp': temp,
       'city': city,
     };
@@ -33,7 +33,7 @@ class TempModel {
   factory TempModel.fromMap(Map<String, dynamic> map) {
     return TempModel(
       date: DateTime.parse(map['results']['date']),
-      temp: map['results']['temp'],
+      temp: (map['results']['temp'] as int).toDouble(),
       city: map['results']['city'],
     );
   }
